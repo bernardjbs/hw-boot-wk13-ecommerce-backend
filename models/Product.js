@@ -11,13 +11,13 @@ class Product extends Model { }
 Product.init(
   {
     id: {
-      tyoe: Datatypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     product_name: {
-      type: Datatypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     }, 
     price: {
@@ -38,7 +38,7 @@ Product.init(
     category_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'category', 
+        model: Category, 
         key: 'id'
       }
     }
