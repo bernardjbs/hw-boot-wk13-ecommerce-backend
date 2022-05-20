@@ -53,5 +53,5 @@ node seeds/index.js
 ## Testing
 > The app can be tested on Insomnia
 
-[Here is a short demo video of how to install and test the application](https://youtu.be/AOMMEk4pLDs)
+[Here is a short demo video of how to install and test the application](https://www.youtube.com/watch?v=xHo9khjQdMw)
 
