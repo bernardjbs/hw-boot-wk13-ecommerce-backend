@@ -10,17 +10,17 @@ router.get('/', async (req, res) => {
     res.status(200).json(tagsData)
   } catch (err) {
     res.status(500).json({ message: "Your request could not be processed - Internal Server Error!" });
-  }
+  };
 });
 
 // Get tag by id - Associated data: Product through ProductTaf
 router.get('/:id', async (req, res) => {
   try {
-    const tagData = await Tag.findByPk(req.params.id, { include: [{ model: Product, through: ProductTag }] })
-    res.status(200).json(tagData)
+    const tagData = await Tag.findByPk(req.params.id, { include: [{ model: Product, through: ProductTag }] });
+    res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json({ message: "Your request could not be processed - Internal Server Error!" });
-  }
+  };
 });
 
 // Create a new tag
@@ -34,7 +34,6 @@ router.post('/', async (req, res) => {
           product_id,
           tag_id: newTag.id
         };
-
       });
       await ProductTag.bulkCreate(productTagArr);
     }
@@ -46,7 +45,7 @@ router.post('/', async (req, res) => {
     res.status(200).json({ newTag, newProducts })
   } catch (err) {
     res.status(400).json({ message: 'Your request could not be processed - There has been an error, please try again' });
-  }
+  };
 });
 
 // Update tag by id - update associated data in ProductTag
@@ -81,9 +80,9 @@ router.put('/:id', async (req, res) => {
       ProductTag.destroy({ where: { id: filterProductTagsToRemove } }),
       ProductTag.bulkCreate(filterNewProductTags),
     ]);
-
+    
     const newProductTags = await ProductTag.findAll({ where: { tag_id: req.params.id } });
-    const updatedTag = await Tag.findAll({ where: { id: req.params.id } })
+    const updatedTag = await Tag.findByPk(req.params.id, { include: [{ model: Product, through: ProductTag }] });
 
     res.status(200).json({ 'UPDATED TAG': updatedTag, 'TAGS': newProductTags });
 

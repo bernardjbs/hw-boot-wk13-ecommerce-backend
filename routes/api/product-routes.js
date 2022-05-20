@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(productData);
   } catch (err) {
     res.status(500).json({ message: 'Your request could not be processed - Internal Server Error!' })
-  }
+  };
 });
 
 // Get product by id - Associated data: Category and Tag through ProductTag
@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
     res.status(200).json({ newProduct, newTags })
   } catch (err) {
     res.status(400).json({ message: 'Your request could not be processed - There has been an error, please try again' });
-  }
+  };
 });
 
 // Update product by id - update associated data in ProductTag
@@ -94,7 +94,9 @@ router.put('/:id', async (req, res) => {
     ]);
 
     const newProductTags = await ProductTag.findAll({ where: { product_id: req.params.id } });
-    const updatedProduct = await Product.findAll({ where: { id: req.params.id } })
+    const updatedProduct = await Product.findByPk(req.params.id, {
+      include: [{ model: Category }, { model: Tag, through: ProductTag }]
+    });
 
     res.status(200).json({ 'UPDATED PRODUCT': updatedProduct, 'TAGS': newProductTags });
 

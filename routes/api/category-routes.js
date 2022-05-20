@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json({ message: "Your request could not be processed - Internal Server Error!" });
-  }
+  };
 });
 
 // Get category by id - Associated data: Product
@@ -20,15 +20,15 @@ router.get('/:id', async (req, res) => {
   try {
     const categoryData = await Category.findByPk(req.params.id, {
       include: [{ model: Product }]
-    })
+    });
     if (!categoryData) {
       res.status(404).json({ message: `The category with id ${req.params.id} could not be found` });
       return;
-    }
+    };
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json({ message: "Your request could not be processed - Internal Server Error!" });
-  }
+  };
 });
 
 // Create a new category
@@ -53,7 +53,7 @@ router.put('/:id', async (req, res) => {
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json({ message: 'Your request could not be processed - There has been an error, please try again' });
-  }
+  };
 });
 
 // Delete a category by id
@@ -65,7 +65,7 @@ router.delete('/:id', async (req, res) => {
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json({ message: 'Your request could not be processed - There has been an error, please try again' });
-  }
+  };
 });
 
 module.exports = router;
